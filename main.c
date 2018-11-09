@@ -12,6 +12,7 @@
 // Dimensões da imagem de entrada
 int sizeX, sizeY;
 
+
 // Imagem de entrada
 RGBf* image;
 
@@ -23,6 +24,12 @@ float exposure = 1.0;
 
 // Modo de exibição atual
 int modo;
+
+// Largura e altura da imagem
+int width, height;
+
+// Ponteiro para o início da imagem na memória
+RGBf* image;
 
 // Função pow mais eficiente (cerca de 7x mais rápida)
 float fastpow(float a, float b);
@@ -44,25 +51,44 @@ void process()
     //
     // SUBSTITUA este código pelos algoritmos a serem implementados
     //
-    int pos;
-    for(pos=0; pos<sizeX*sizeY; pos++) {
-        image8[pos].r = (unsigned char) (255 * exposure);
-        image8[pos].g = (unsigned char) (127 * exposure);
-        image8[pos].b = (unsigned char) (0 * exposure);
+   // int pos;
+  //  for(pos=0; pos<sizeX*sizeY; pos++) {
+   //     image8[pos].r = (unsigned char) (255 * exposure);
+   //     image8[pos].g = (unsigned char) (127 * exposure);
+   //     image8[pos].b = (unsigned char) (0 * exposure);
+   // }
+
+   for(int i=0; i<width*height; i++) {
+        float r = (image[i].r / (image[i].r + 0.5));
+        float g = (image[i].g / (image[i].g + 0.5));
+        float b = (image[i].b / (image[i].b + 0.5));
+
+        r = (image[i].r * exposure);
+        g = (image[i].g * exposure);
+        b = (image[i].b * exposure);
+
+        image8[i].r = (unsigned char) (fmin(1.0,r) * 255);
+        image8[i].g = (unsigned char) (fmin(1.0,g) * 255);
+        image8[i].b = (unsigned char) (fmin(1.0,b) * 255);
+
     }
+     //2.4: Conversão para 24 bits
+
+
+
+        //
+    // NÃO ALTERAR A PARTIR DAQUI!!!!
+    //
+    buildTex();
+}
 
 //------------------------------------------------------------------------------
 // 2.1: código para LER a imagem de entrada (lendo a imagem tree.hdr): --->OK
 
-typedef struct {
-   float r, g, b;
-} RGBf;
 
-// Largura e altura da imagem
-int width, height;
+void leitura()
+{
 
-// Ponteiro para o início da imagem na memória
-RGBf* image;
 
 // Abre o arquivo
 FILE* arq;
@@ -71,18 +97,31 @@ arq = fopen("tree.hdr","rb");
 // Lê o header do arquivo, de onde são extraídas a largura e altura
 RGBE_ReadHeader(arq, &width, &height, NULL);
 
-// Aloca memória para a imagem inteira
-image = (RGBf*) malloc(sizeof(RGBf) * width * height);
+// TESTE: cria uma imagem de 800x600
+sizeX = width;
+sizeY = height;
 
+    printf("%d x %d\n", sizeX, sizeY);
+
+    // Aloca imagem float
+    image = (RGBf *)malloc(sizeof(RGBf) * sizeX * sizeY);
+
+    // Aloca memória para imagem de 24 bits
+    image8 = (RGB8*) malloc(sizeof(RGB8) * sizeX * sizeY);
+
+printf("%d %d\n", width, height);
 // Finalmente, lê a imagem para a memória
 int result = RGBE_ReadPixels_RLE(arq, (float*)image, width, height);
 if (result == RGBE_RETURN_FAILURE) {
    /// Tratamento de erro...
+   printf("ERRO!\n");
 }
 fclose(arq);
+}
 //----------------------------------------------------------------------------------
 //2.2: Aplicação do fator de exposição ---> OK
-int comp = width * height;
+
+/*
 printf("%d", comp);
 
 
@@ -105,20 +144,14 @@ printf("%d", comp);
     //2.3.2: Tone mapping por Correção gama ---> ok
 
         for(int i=0; i<comp; i++) {
-        image[i].r = (unsigned char) (fastpow(image[i].r,2.0));
-        image[i].g = (unsigned char) (fastpow(image[i].g,2.0));
-        image[i].b = (unsigned char) (fastpow(image[i].b,2.0));
+        image[i].r = (unsigned char) (fastpow(image[i].r,(1.0/2.0)));
+        image[i].g = (unsigned char) (fastpow(image[i].g,(1.0/2.0)));
+        image[i].b = (unsigned char) (fastpow(image[i].b,(1.0/2.0)));
     }
 
 //---------------------------------------------------------------------------------------
 
-   //2.4: Conversão para 24 bits
 
-        for(int i=0; i<comp; i++) {
-        image8[i].r = (unsigned char) (min(1.0,image[i].r) * 255);
-        image8[i].g = (unsigned char) (min(1.0,image[i].g) * 255);
-        image8[i].b = (unsigned char) (min(1.0,image[i].b) * 255);
-    }
 
 
 
@@ -127,6 +160,7 @@ printf("%d", comp);
     //
     buildTex();
 }
+*/
 
 int main(int argc, char** argv)
 {
@@ -147,19 +181,11 @@ int main(int argc, char** argv)
     // 2. Ler os pixels
     //
 
-    // TESTE: cria uma imagem de 800x600
-    sizeX = 800;
-    sizeY = 600;
 
-    printf("%d x %d\n", sizeX, sizeY);
-
-    // Aloca imagem float
-    image = (RGBf *)malloc(sizeof(RGBf) * sizeX * sizeY);
-
-    // Aloca memória para imagem de 24 bits
-    image8 = (RGB8*) malloc(sizeof(RGB8) * sizeX * sizeY);
 
     exposure = 1.0f; // exposição inicial
+
+    leitura();
 
     // Aplica processamento inicial
     process();

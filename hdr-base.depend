@@ -124,3 +124,44 @@
 	<string.h>
 	<ctype.h>
 
+1541800442 source:/home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/opengl.c
+	"opengl.h"
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/opengl.h
+	<windows.h>
+	"gl/glut.h"
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdio.h>
+	<stdlib.h>
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/include/GL/glut.h
+	"freeglut.h"
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/include/GL/freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/include/GL/freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/include/GL/freeglut_ext.h
+
+1541800442 source:/home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/rgbe.c
+	"rgbe.h"
+	<math.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/rgbe.h
+	<stdio.h>
+
+1541800786 source:/home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/main.c
+	<math.h>
+	<string.h>
+	"opengl.h"
+	"rgbe.h"
+
