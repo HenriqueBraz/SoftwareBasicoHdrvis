@@ -23,7 +23,7 @@ RGB8* image8;
 float exposure = 1.0;
 
 // Modo de exibição atual
-int modo;
+int modo = 1;
 
 // Largura e altura da imagem
 int width, height;
@@ -33,11 +33,16 @@ RGBf* image;
 
 // Função pow mais eficiente (cerca de 7x mais rápida)
 float fastpow(float a, float b);
-float fastpow(float a, float b) {
-     union { float f; int i; }
-      u = { a };
-      u.i = (int)(b * (u.i - 1065307417) + 1065307417);
-      return u.f;
+float fastpow(float a, float b)
+{
+    union
+    {
+        float f;
+        int i;
+    }
+    u = { a };
+    u.i = (int)(b * (u.i - 1065307417) + 1065307417);
+    return u.f;
 }
 
 // Função principal de processamento: ela deve chamar outras funções
@@ -51,32 +56,62 @@ void process()
     //
     // SUBSTITUA este código pelos algoritmos a serem implementados
     //
-   // int pos;
-  //  for(pos=0; pos<sizeX*sizeY; pos++) {
-   //     image8[pos].r = (unsigned char) (255 * exposure);
-   //     image8[pos].g = (unsigned char) (127 * exposure);
-   //     image8[pos].b = (unsigned char) (0 * exposure);
-   // }
+    // int pos;
+    //  for(pos=0; pos<sizeX*sizeY; pos++) {
+    //     image8[pos].r = (unsigned char) (255 * exposure);
+    //     image8[pos].g = (unsigned char) (127 * exposure);
+    //     image8[pos].b = (unsigned char) (0 * exposure);
+    // }
 
-   for(int i=0; i<width*height; i++) {
-        float r = (image[i].r / (image[i].r + 0.5));
-        float g = (image[i].g / (image[i].g + 0.5));
-        float b = (image[i].b / (image[i].b + 0.5));
+      printf("%d\n", modo);
 
-        r = (image[i].r * exposure);
-        g = (image[i].g * exposure);
-        b = (image[i].b * exposure);
+    for(int i=0; i<width*height; i++)
+    {
+
+          //Fator de exposição
+
+        float r = 0.0;
+        float g = 0.0;
+        float b = 0.0;
+
+
+
+
+        if(modo == 0)
+        {
+
+            r = (image[i].r / (image[i].r + 0.5));
+            g = (image[i].g / (image[i].g + 0.5));
+            b = (image[i].b / (image[i].b + 0.5));
+
+        }
+        else if (modo == 1)
+        {
+
+            r = (fastpow(image[i].r,(1.0/2.0)));
+            g = (fastpow(image[i].g,(1.0/2.0)));
+            b = (fastpow(image[i].b,(1.0/2.0)));
+
+
+
+        }
+
+         r = (image[i].r * exposure);
+         g = (image[i].g * exposure);
+         b = (image[i].b * exposure);
+
+
 
         image8[i].r = (unsigned char) (fmin(1.0,r) * 255);
         image8[i].g = (unsigned char) (fmin(1.0,g) * 255);
         image8[i].b = (unsigned char) (fmin(1.0,b) * 255);
 
     }
-     //2.4: Conversão para 24 bits
+    //2.4: Conversão para 24 bits
 
 
 
-        //
+    //
     // NÃO ALTERAR A PARTIR DAQUI!!!!
     //
     buildTex();
@@ -91,15 +126,15 @@ void leitura()
 
 
 // Abre o arquivo
-FILE* arq;
-arq = fopen("tree.hdr","rb");
+    FILE* arq;
+    arq = fopen("tree.hdr","rb");
 
 // Lê o header do arquivo, de onde são extraídas a largura e altura
-RGBE_ReadHeader(arq, &width, &height, NULL);
+    RGBE_ReadHeader(arq, &width, &height, NULL);
 
 // TESTE: cria uma imagem de 800x600
-sizeX = width;
-sizeY = height;
+    sizeX = width;
+    sizeY = height;
 
     printf("%d x %d\n", sizeX, sizeY);
 
@@ -109,14 +144,15 @@ sizeY = height;
     // Aloca memória para imagem de 24 bits
     image8 = (RGB8*) malloc(sizeof(RGB8) * sizeX * sizeY);
 
-printf("%d %d\n", width, height);
+    printf("%d %d\n", width, height);
 // Finalmente, lê a imagem para a memória
-int result = RGBE_ReadPixels_RLE(arq, (float*)image, width, height);
-if (result == RGBE_RETURN_FAILURE) {
-   /// Tratamento de erro...
-   printf("ERRO!\n");
-}
-fclose(arq);
+    int result = RGBE_ReadPixels_RLE(arq, (float*)image, width, height);
+    if (result == RGBE_RETURN_FAILURE)
+    {
+        /// Tratamento de erro...
+        printf("ERRO!\n");
+    }
+    fclose(arq);
 }
 //----------------------------------------------------------------------------------
 //2.2: Aplicação do fator de exposição ---> OK
@@ -164,7 +200,8 @@ printf("%d", comp);
 
 int main(int argc, char** argv)
 {
-    if(argc==1) {
+    if(argc==1)
+    {
         printf("hdrvis [tree.hdr]\n");
         exit(1);
     }
