@@ -63,15 +63,9 @@ void process()
     for(int i=0; i<width*height; i++)
     {
 
-
-
-
-
-
-
         if(modo == 0)
         {
-           //Tone mapping por escala
+            //Tone mapping por escala
             r = (image[i].r / (image[i].r + 0.5));
             g = (image[i].g / (image[i].g + 0.5));
             b = (image[i].b / (image[i].b + 0.5));
@@ -83,8 +77,6 @@ void process()
             r = (fastpow(image[i].r,(1.0/1.8)));
             g = (fastpow(image[i].g,(1.0/1.8)));
             b = (fastpow(image[i].b,(1.0/1.8)));
-
-
 
         }
 
@@ -102,16 +94,11 @@ void process()
     }
 
 
-
-
-    //
-    // NÃO ALTERAR A PARTIR DAQUI!!!!
-    //
     buildTex();
 }
 
 //------------------------------------------------------------------------------
-// 2.1: código para LER a imagem de entrada (lendo a imagem tree.hdr): --->OK
+// 2.1: código para LER a imagem de entrada (lendo a imagem tree.hdr)
 
 
 void leitura()
@@ -147,50 +134,6 @@ void leitura()
     }
     fclose(arq);
 }
-//----------------------------------------------------------------------------------
-//2.2: Aplicação do fator de exposição ---> OK
-
-/*
-printf("%d", comp);
-
-
-    for(int i=0; i<comp; i++) {
-        image[i].r = (unsigned char) (image[i].r * exposure);
-        image[i].g = (unsigned char) (image[i].g * exposure);
-        image[i].b = (unsigned char) (image[i].b * exposure);
-    }
-
-//-----------------------------------------------------------------------------------
-
- //2.3.1: Tone mapping por escala ---> ok
-
-    for(int i=0; i<comp; i++) {
-        image[i].r = (unsigned char) (image[i].r / (image[i].r + 0.5));
-        image[i].g = (unsigned char) (image[i].g / (image[i].g + 0.5));
-        image[i].b = (unsigned char) (image[i].b / (image[i].b + 0.5));
-    }
- //------------------------------------------------------------------------------------
-    //2.3.2: Tone mapping por Correção gama ---> ok
-
-        for(int i=0; i<comp; i++) {
-        image[i].r = (unsigned char) (fastpow(image[i].r,(1.0/2.0)));
-        image[i].g = (unsigned char) (fastpow(image[i].g,(1.0/2.0)));
-        image[i].b = (unsigned char) (fastpow(image[i].b,(1.0/2.0)));
-    }
-
-//---------------------------------------------------------------------------------------
-
-
-
-
-
-    //
-    // NÃO ALTERAR A PARTIR DAQUI!!!!
-    //
-    buildTex();
-}
-*/
-
 int main(int argc, char** argv)
 {
     if(argc==1)
