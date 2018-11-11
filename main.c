@@ -136,6 +136,56 @@ void leitura()
 }
 int main(int argc, char** argv)
 {
+    int num = 0;
+    printf("Escolha o arquivo HDR de imagem a ser carregado:\n\n");
+
+    printf("1 - tree       2 - table    3 - mount\n\n");
+    printf("4 - memorial   5 - fog      6 - desk\n\n");
+    printf("7 - cathedral  8 - apartment\n\n");
+    printf("Escolha um numero de 1 a 8:\n");
+    scanf("%d", &num);
+
+    char caminho[100];
+
+    switch (num)
+{
+   case 1:
+     caminho = a;
+   break;
+
+   case 2:
+      caminho = "a";
+   break;
+
+     case 3:
+      caminho = "a";
+   break;
+
+   case 4:
+      caminho = "a";
+   break;
+
+   case 5:
+      caminho = "a";
+   break;
+
+   case 6:
+      caminho = "a";
+   break;
+
+     case 7:
+      caminho = "a";
+   break;
+
+   case 8:
+      caminho = "a";
+   break;
+
+   default
+     printf("Opcao Invalida, digite novamente\n");
+}
+
+
     if(argc==1)
     {
         printf("hdrvis [tree.hdr]\n");
