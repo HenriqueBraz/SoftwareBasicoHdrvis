@@ -23,13 +23,19 @@ RGB8* image8;
 float exposure = 1.0;
 
 // Modo de exibição atual
-int modo = 1;
+int modo;
+
 
 // Largura e altura da imagem
 int width, height;
 
 // Ponteiro para o início da imagem na memória
 RGBf* image;
+
+float r = 0.0;
+float g = 0.0;
+float b = 0.0;
+
 
 // Função pow mais eficiente (cerca de 7x mais rápida)
 float fastpow(float a, float b);
@@ -50,29 +56,15 @@ float fastpow(float a, float b)
 void process()
 {
     printf("Exposure: %.3f\n", exposure);
-    //
-    // EXEMPLO: preenche a imagem com pixels cor de laranja...
-    //
-    //
-    // SUBSTITUA este código pelos algoritmos a serem implementados
-    //
-    // int pos;
-    //  for(pos=0; pos<sizeX*sizeY; pos++) {
-    //     image8[pos].r = (unsigned char) (255 * exposure);
-    //     image8[pos].g = (unsigned char) (127 * exposure);
-    //     image8[pos].b = (unsigned char) (0 * exposure);
-    // }
 
-      printf("%d\n", modo);
+    printf("modo: %d\n", modo);
+
 
     for(int i=0; i<width*height; i++)
     {
 
           //Fator de exposição
 
-        float r = 0.0;
-        float g = 0.0;
-        float b = 0.0;
 
 
 
@@ -101,13 +93,13 @@ void process()
          b = (image[i].b * exposure);
 
 
-
+        //2.4: Conversão para 24 bits
         image8[i].r = (unsigned char) (fmin(1.0,r) * 255);
         image8[i].g = (unsigned char) (fmin(1.0,g) * 255);
         image8[i].b = (unsigned char) (fmin(1.0,b) * 255);
 
     }
-    //2.4: Conversão para 24 bits
+
 
 
 
@@ -208,15 +200,6 @@ int main(int argc, char** argv)
 
     // Inicialização da janela gráfica
     init(argc,argv);
-
-
-
-
-    // Siga as orientações no enunciado para:
-    //
-    // 1. Descobrir o tamanho da imagem (ler header)
-    // 2. Ler os pixels
-    //
 
 
 

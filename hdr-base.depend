@@ -165,3 +165,44 @@
 	"opengl.h"
 	"rgbe.h"
 
+1541378652 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\opengl.c
+	"opengl.h"
+
+1475872168 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\opengl.h
+	<windows.h>
+	"gl/glut.h"
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdio.h>
+	<stdlib.h>
+
+1300995668 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\include\gl\glut.h
+	"freeglut.h"
+
+1300995668 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\include\gl\freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1300995668 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\include\gl\freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1300995668 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\include\gl\freeglut_ext.h
+
+1475628294 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\rgbe.c
+	"rgbe.h"
+	<math.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+1472593460 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\rgbe.h
+	<stdio.h>
+
+1541903990 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\main.c
+	<math.h>
+	<string.h>
+	"opengl.h"
+	"rgbe.h"
+
