@@ -98,6 +98,10 @@ void process()
         image8[i].g = (unsigned char) (fmin(1.0,g) * 255);
         image8[i].b = (unsigned char) (fmin(1.0,b) * 255);
 
+        printf("%d\n", image8[i].r);
+        printf("%d\n", image8[i].g);
+        printf("%d\n", image8[i].b);
+
     }
 
 

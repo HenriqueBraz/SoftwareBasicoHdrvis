@@ -165,7 +165,7 @@
 	"opengl.h"
 	"rgbe.h"
 
-1541378652 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\opengl.c
+1541905847 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\opengl.c
 	"opengl.h"
 
 1475872168 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\opengl.h
@@ -200,7 +200,7 @@
 1472593460 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\rgbe.h
 	<stdio.h>
 
-1541903990 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\main.c
+1541905264 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\main.c
 	<math.h>
 	<string.h>
 	"opengl.h"

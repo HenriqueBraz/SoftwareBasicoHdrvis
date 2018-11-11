@@ -135,8 +135,8 @@ void keyboard( unsigned char key, int x, int y )
       free(image);
       exit(1);
       break;
-    case 't':
-      printf("Tone mapping\n");
+    case 's':
+      printf("Scale correction\n");
       modo = SCALE;
       process();
       glutPostRedisplay();
