@@ -12,7 +12,6 @@
 // Dimensões da imagem de entrada
 int sizeX, sizeY;
 
-
 // Imagem de entrada
 RGBf* image;
 
@@ -107,7 +106,7 @@ void leitura()
 
 // Abre o arquivo
     FILE* arq;
-    arq = fopen("tree.hdr","rb");
+    arq = fopen("fog.hdr","rb");
 
 // Lê o header do arquivo, de onde são extraídas a largura e altura
     RGBE_ReadHeader(arq, &width, &height, NULL);
@@ -136,52 +135,55 @@ void leitura()
 }
 int main(int argc, char** argv)
 {
-    int num = 0;
-    printf("Escolha o arquivo HDR de imagem a ser carregado:\n\n");
 
+    int num = 0;
+    //aloca mmemória para o ponteiro url
+    char* url;
+    url = (char*)malloc(20*sizeof(char));
+    url = (char*)NULL;
+
+    printf("Escolha o arquivo HDR de imagem a ser carregado:\n\n");
     printf("1 - tree       2 - table    3 - mount\n\n");
     printf("4 - memorial   5 - fog      6 - desk\n\n");
     printf("7 - cathedral  8 - apartment\n\n");
     printf("Escolha um numero de 1 a 8:\n");
     scanf("%d", &num);
 
-    char caminho[100];
-
     switch (num)
 {
    case 1:
-     caminho = a;
+       url = "tree.hdr";
    break;
 
    case 2:
-      caminho = "a";
+      url = "table.hdr";
    break;
 
      case 3:
-      caminho = "a";
+       url = "mount.hdr";
    break;
 
    case 4:
-      caminho = "a";
+       url = "memorial.hdr";
    break;
 
    case 5:
-      caminho = "a";
+       url = "fog.hdr";
    break;
 
    case 6:
-      caminho = "a";
+       url = "desk.hdr";
    break;
 
      case 7:
-      caminho = "a";
+       url = "cathedral.hdr";
    break;
 
    case 8:
-      caminho = "a";
+       url = "apartment.hdr";
    break;
 
-   default
+   default:
      printf("Opcao Invalida, digite novamente\n");
 }
 
