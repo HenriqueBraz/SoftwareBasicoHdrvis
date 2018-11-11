@@ -63,7 +63,7 @@ void process()
     for(int i=0; i<width*height; i++)
     {
 
-          //Fator de exposição
+
 
 
 
@@ -71,7 +71,7 @@ void process()
 
         if(modo == 0)
         {
-
+           //Tone mapping por escala
             r = (image[i].r / (image[i].r + 0.5));
             g = (image[i].g / (image[i].g + 0.5));
             b = (image[i].b / (image[i].b + 0.5));
@@ -79,28 +79,25 @@ void process()
         }
         else if (modo == 1)
         {
-
-            r = (fastpow(image[i].r,(1.0/2.0)));
-            g = (fastpow(image[i].g,(1.0/2.0)));
-            b = (fastpow(image[i].b,(1.0/2.0)));
+            //Tone mapping por correção gama
+            r = (fastpow(image[i].r,(1.0/1.8)));
+            g = (fastpow(image[i].g,(1.0/1.8)));
+            b = (fastpow(image[i].b,(1.0/1.8)));
 
 
 
         }
 
-         r = (image[i].r * exposure);
-         g = (image[i].g * exposure);
-         b = (image[i].b * exposure);
+        //Fator de exposição
+        r = (image[i].r * exposure);
+        g = (image[i].g * exposure);
+        b = (image[i].b * exposure);
 
 
         //2.4: Conversão para 24 bits
         image8[i].r = (unsigned char) (fmin(1.0,r) * 255);
         image8[i].g = (unsigned char) (fmin(1.0,g) * 255);
         image8[i].b = (unsigned char) (fmin(1.0,b) * 255);
-
-        printf("%d\n", image8[i].r);
-        printf("%d\n", image8[i].g);
-        printf("%d\n", image8[i].b);
 
     }
 
