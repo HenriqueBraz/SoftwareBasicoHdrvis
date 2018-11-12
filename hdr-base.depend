@@ -124,3 +124,85 @@
 	<string.h>
 	<ctype.h>
 
+1541800442 source:/home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/opengl.c
+	"opengl.h"
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/opengl.h
+	<windows.h>
+	"gl/glut.h"
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdio.h>
+	<stdlib.h>
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/include/GL/glut.h
+	"freeglut.h"
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/include/GL/freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/include/GL/freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/include/GL/freeglut_ext.h
+
+1541800442 source:/home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/rgbe.c
+	"rgbe.h"
+	<math.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+1541800442 /home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/rgbe.h
+	<stdio.h>
+
+1541804274 source:/home/17120069/Desktop/psbt2/SoftwareBasicoHdrvis/main.c
+	<math.h>
+	<string.h>
+	"opengl.h"
+	"rgbe.h"
+
+1541996958 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\opengl.c
+	"opengl.h"
+
+1475872168 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\opengl.h
+	<windows.h>
+	"gl/glut.h"
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<stdio.h>
+	<stdlib.h>
+
+1300995668 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\include\gl\glut.h
+	"freeglut.h"
+
+1300995668 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\include\gl\freeglut.h
+	"freeglut_std.h"
+	"freeglut_ext.h"
+
+1300995668 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\include\gl\freeglut_std.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1300995668 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\include\gl\freeglut_ext.h
+
+1475628294 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\rgbe.c
+	"rgbe.h"
+	<math.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+1472593460 c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\rgbe.h
+	<stdio.h>
+
+1541996583 source:c:\users\henrique\desktop\hdrvis\softwarebasicohdrvis\main.c
+	<math.h>
+	<string.h>
+	"opengl.h"
+	"rgbe.h"
+

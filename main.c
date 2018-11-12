@@ -12,6 +12,9 @@
 // Dimensões da imagem de entrada
 int sizeX, sizeY;
 
+//arquivo para guardar as urls para os nomes dos arquivos
+char urls[20];
+
 // Imagem de entrada
 RGBf* image;
 
@@ -24,39 +27,6 @@ float exposure = 1.0;
 // Modo de exibição atual
 int modo;
 
-// Função pow mais eficiente (cerca de 7x mais rápida)
-float fastpow(float a, float b);
-float fastpow(float a, float b) {
-     union { float f; int i; }
-      u = { a };
-      u.i = (int)(b * (u.i - 1065307417) + 1065307417);
-      return u.f;
-}
-
-// Função principal de processamento: ela deve chamar outras funções
-// quando for necessário (ex: algoritmos de tone mapping, etc)
-void process()
-{
-    printf("Exposure: %.3f\n", exposure);
-    //
-    // EXEMPLO: preenche a imagem com pixels cor de laranja...
-    //
-    //
-    // SUBSTITUA este código pelos algoritmos a serem implementados
-    //
-    int pos;
-    for(pos=0; pos<sizeX*sizeY; pos++) {
-        image8[pos].r = (unsigned char) (255 * exposure);
-        image8[pos].g = (unsigned char) (127 * exposure);
-        image8[pos].b = (unsigned char) (0 * exposure);
-    }
-
-//------------------------------------------------------------------------------
-// 2.1: código para LER a imagem de entrada (lendo a imagem tree.hdr): --->OK
-
-typedef struct {
-   float r, g, b;
-} RGBf;
 
 // Largura e altura da imagem
 int width, height;
@@ -64,92 +34,84 @@ int width, height;
 // Ponteiro para o início da imagem na memória
 RGBf* image;
 
-// Abre o arquivo
-FILE* arq;
-arq = fopen("tree.hdr","rb");
+float r = 0.0;
+float g = 0.0;
+float b = 0.0;
 
-// Lê o header do arquivo, de onde são extraídas a largura e altura
-RGBE_ReadHeader(arq, &width, &height, NULL);
-
-// Aloca memória para a imagem inteira
-image = (RGBf*) malloc(sizeof(RGBf) * width * height);
-
-// Finalmente, lê a imagem para a memória
-int result = RGBE_ReadPixels_RLE(arq, (float*)image, width, height);
-if (result == RGBE_RETURN_FAILURE) {
-   /// Tratamento de erro...
+// Função pow mais eficiente (cerca de 7x mais rápida)
+float fastpow(float a, float b);
+float fastpow(float a, float b)
+{
+    union
+    {
+        float f;
+        int i;
+    }
+    u = { a };
+    u.i = (int)(b * (u.i - 1065307417) + 1065307417);
+    return u.f;
 }
-fclose(arq);
-//----------------------------------------------------------------------------------
-//2.2: Aplicação do fator de exposição ---> OK
-int comp = width * height;
-printf("%d", comp);
+
+// Função principal de processamento: ela deve chamar outras funções
+// quando for necessário (ex: algoritmos de tone mapping, etc)
+void process()
+{
+    printf("Exposure: %.3f\n", exposure);
 
 
-    for(int i=0; i<comp; i++) {
-        image[i].r = (unsigned char) (image[i].r * exposure);
-        image[i].g = (unsigned char) (image[i].g * exposure);
-        image[i].b = (unsigned char) (image[i].b * exposure);
+    for(int i=0; i<width*height; i++)
+    {
+
+
+
+        if(modo == 0)
+        {
+            //Tone mapping por escala
+            r = ((image[i].r / (image[i].r + 0.5))* exposure);
+            g = ((image[i].g / (image[i].g + 0.5))* exposure);
+            b = ((image[i].b / (image[i].b + 0.5))*exposure);
+
+        }
+        else if (modo == 1)
+        {
+
+            //Tone mapping por correção gama
+            r = ((fastpow(image[i].r,(1.0/1.8)))* exposure);
+            g = ((fastpow(image[i].g,(1.0/1.8)))* exposure);
+            b = ((fastpow(image[i].b,(1.0/1.8)))* exposure);
+
+        }
+
+
+        //2.4: Conversão para 24 bits
+        image8[i].r = (unsigned char) (fmin(1.0,r) * 255);
+        image8[i].g = (unsigned char) (fmin(1.0,g) * 255);
+        image8[i].b = (unsigned char) (fmin(1.0,b) * 255);
+
     }
 
-//-----------------------------------------------------------------------------------
 
- //2.3.1: Tone mapping por escala ---> ok
-
-    for(int i=0; i<comp; i++) {
-        image[i].r = (unsigned char) (image[i].r / (image[i].r + 0.5));
-        image[i].g = (unsigned char) (image[i].g / (image[i].g + 0.5));
-        image[i].b = (unsigned char) (image[i].b / (image[i].b + 0.5));
-    }
- //------------------------------------------------------------------------------------
-    //2.3.2: Tone mapping por Correção gama ---> ok
-
-        for(int i=0; i<comp; i++) {
-        image[i].r = (unsigned char) (fastpow(image[i].r,2.0));
-        image[i].g = (unsigned char) (fastpow(image[i].g,2.0));
-        image[i].b = (unsigned char) (fastpow(image[i].b,2.0));
-    }
-
-//---------------------------------------------------------------------------------------
-
-   //2.4: Conversão para 24 bits
-
-        for(int i=0; i<comp; i++) {
-        image8[i].r = (unsigned char) (min(1.0,image[i].r) * 255);
-        image8[i].g = (unsigned char) (min(1.0,image[i].g) * 255);
-        image8[i].b = (unsigned char) (min(1.0,image[i].b) * 255);
-    }
-
-
-
-    //
-    // NÃO ALTERAR A PARTIR DAQUI!!!!
-    //
     buildTex();
 }
 
-int main(int argc, char** argv)
+//------------------------------------------------------------------------------
+// 2.1: código para LER a imagem de entrada (lendo a imagem tree.hdr)
+
+
+void leitura()
 {
-    if(argc==1) {
-        printf("hdrvis [tree.hdr]\n");
-        exit(1);
-    }
-
-    // Inicialização da janela gráfica
-    init(argc,argv);
 
 
+// Abre o arquivo
+    FILE* arq;
+    arq = fopen(urls,"rb");
 
+// Lê o header do arquivo, de onde são extraídas a largura e altura
+    RGBE_ReadHeader(arq, &width, &height, NULL);
 
-    // Siga as orientações no enunciado para:
-    //
-    // 1. Descobrir o tamanho da imagem (ler header)
-    // 2. Ler os pixels
-    //
-
-    // TESTE: cria uma imagem de 800x600
-    sizeX = 800;
-    sizeY = 600;
+// TESTE: cria uma imagem de 800x600
+    sizeX = width;
+    sizeY = height;
 
     printf("%d x %d\n", sizeX, sizeY);
 
@@ -159,7 +121,108 @@ int main(int argc, char** argv)
     // Aloca memória para imagem de 24 bits
     image8 = (RGB8*) malloc(sizeof(RGB8) * sizeX * sizeY);
 
+    printf("%d %d\n", width, height);
+// Finalmente, lê a imagem para a memória
+    int result = RGBE_ReadPixels_RLE(arq, (float*)image, width, height);
+    if (result == RGBE_RETURN_FAILURE)
+    {
+        /// Tratamento de erro...
+        printf("ERRO!\n");
+    }
+    fclose(arq);
+}
+int main(int argc, char** argv)
+{
+
+    //aloca memória para o ponteiro url
+    char* url;
+    url = (char*)malloc(20*sizeof(char));
+    url = (char*)NULL;
+
+    int flag = 0;
+    int num = 0;
+    printf("Escolha o arquivo HDR de imagem a ser carregado:\n\n");
+    printf("1 - tree       2 - table    3 - mount\n\n");
+    printf("4 - memorial   5 - fog      6 - desk\n\n");
+    printf("7 - cathedral  8 - apartment\n\n");
+    printf("Escolha um numero de 1 a 8:\n");
+
+
+    while(flag == 0)
+    {
+
+        scanf("%d", &num);
+
+        switch (num)
+        {
+        case 1:
+            url = "tree.hdr";
+            flag = 1;
+            break;
+
+        case 2:
+            url = "table.hdr";
+            flag = 1;
+            break;
+
+        case 3:
+            url = "mount.hdr";
+            flag = 1;
+            break;
+
+        case 4:
+            url = "memorial.hdr";
+            flag = 1;
+            break;
+
+        case 5:
+            url = "fog.hdr";
+            flag = 1;
+            break;
+
+        case 6:
+            url = "desk.hdr";
+            flag = 1;
+            break;
+
+        case 7:
+            url = "cathedral.hdr";
+            flag = 1;
+            break;
+
+        case 8:
+            url = "apartment.hdr";
+            flag = 1;
+            break;
+
+        default:
+            printf("Opcao Invalida, digite novamente\n");
+
+
+        }
+
+
+    }
+
+
+    if(argc==1)
+    {
+        printf("hdrvis [tree.hdr]\n");
+        exit(1);
+    }
+
+    // Inicialização da janela gráfica
+    init(argc,argv);
+
+
     exposure = 1.0f; // exposição inicial
+
+
+    strcpy(urls,url); //passa o valor do ponteiro para urls
+
+
+    leitura(); //chama o arquivo de elitura
+
 
     // Aplica processamento inicial
     process();
