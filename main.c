@@ -152,57 +152,58 @@ int main(int argc, char** argv)
     printf("Escolha um numero de 1 a 8:\n");
 
 
-    while(flag == 0){
-
-      scanf("%d", &num);
-
-            switch (num)
+    while(flag == 0)
     {
-    case 1:
-        url = "tree.hdr";
-        flag = 1;
-        break;
 
-    case 2:
-        url = "table.hdr";
-        flag = 1;
-        break;
+        scanf("%d", &num);
 
-    case 3:
-        url = "mount.hdr";
-        flag = 1;
-        break;
+        switch (num)
+        {
+        case 1:
+            url = "tree.hdr";
+            flag = 1;
+            break;
 
-    case 4:
-        url = "memorial.hdr";
-        flag = 1;
-        break;
+        case 2:
+            url = "table.hdr";
+            flag = 1;
+            break;
 
-    case 5:
-        url = "fog.hdr";
-        flag = 1;
-        break;
+        case 3:
+            url = "mount.hdr";
+            flag = 1;
+            break;
 
-    case 6:
-        url = "desk.hdr";
-        flag = 1;
-        break;
+        case 4:
+            url = "memorial.hdr";
+            flag = 1;
+            break;
 
-    case 7:
-        url = "cathedral.hdr";
-        flag = 1;
-        break;
+        case 5:
+            url = "fog.hdr";
+            flag = 1;
+            break;
 
-    case 8:
-        url = "apartment.hdr";
-        flag = 1;
-        break;
+        case 6:
+            url = "desk.hdr";
+            flag = 1;
+            break;
 
-    default:
-        printf("Opcao Invalida, digite novamente\n");
+        case 7:
+            url = "cathedral.hdr";
+            flag = 1;
+            break;
+
+        case 8:
+            url = "apartment.hdr";
+            flag = 1;
+            break;
+
+        default:
+            printf("Opcao Invalida, digite novamente\n");
 
 
-    }
+        }
 
 
     }
