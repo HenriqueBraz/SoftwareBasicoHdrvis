@@ -12,6 +12,9 @@
 // Dimensões da imagem de entrada
 int sizeX, sizeY;
 
+//arquivo para guardar as urls para os nomes dos arquivos
+char urls[20];
+
 // Imagem de entrada
 RGBf* image;
 
@@ -34,7 +37,6 @@ RGBf* image;
 float r = 0.0;
 float g = 0.0;
 float b = 0.0;
-
 
 // Função pow mais eficiente (cerca de 7x mais rápida)
 float fastpow(float a, float b);
@@ -106,7 +108,7 @@ void leitura()
 
 // Abre o arquivo
     FILE* arq;
-    arq = fopen("fog.hdr","rb");
+    arq = fopen(urls,"rb");
 
 // Lê o header do arquivo, de onde são extraídas a largura e altura
     RGBE_ReadHeader(arq, &width, &height, NULL);
@@ -136,56 +138,74 @@ void leitura()
 int main(int argc, char** argv)
 {
 
-    int num = 0;
-    //aloca mmemória para o ponteiro url
+    //aloca memória para o ponteiro url
     char* url;
     url = (char*)malloc(20*sizeof(char));
     url = (char*)NULL;
 
+    int flag = 0;
+    int num = 0;
     printf("Escolha o arquivo HDR de imagem a ser carregado:\n\n");
     printf("1 - tree       2 - table    3 - mount\n\n");
     printf("4 - memorial   5 - fog      6 - desk\n\n");
     printf("7 - cathedral  8 - apartment\n\n");
     printf("Escolha um numero de 1 a 8:\n");
-    scanf("%d", &num);
 
-    switch (num)
-{
-   case 1:
-       url = "tree.hdr";
-   break;
 
-   case 2:
-      url = "table.hdr";
-   break;
+    while(flag == 0){
 
-     case 3:
-       url = "mount.hdr";
-   break;
+      scanf("%d", &num);
 
-   case 4:
-       url = "memorial.hdr";
-   break;
+            switch (num)
+    {
+    case 1:
+        url = "tree.hdr";
+        flag = 1;
+        break;
 
-   case 5:
-       url = "fog.hdr";
-   break;
+    case 2:
+        url = "table.hdr";
+        flag = 1;
+        break;
 
-   case 6:
-       url = "desk.hdr";
-   break;
+    case 3:
+        url = "mount.hdr";
+        flag = 1;
+        break;
 
-     case 7:
-       url = "cathedral.hdr";
-   break;
+    case 4:
+        url = "memorial.hdr";
+        flag = 1;
+        break;
 
-   case 8:
-       url = "apartment.hdr";
-   break;
+    case 5:
+        url = "fog.hdr";
+        flag = 1;
+        break;
 
-   default:
-     printf("Opcao Invalida, digite novamente\n");
-}
+    case 6:
+        url = "desk.hdr";
+        flag = 1;
+        break;
+
+    case 7:
+        url = "cathedral.hdr";
+        flag = 1;
+        break;
+
+    case 8:
+        url = "apartment.hdr";
+        flag = 1;
+        break;
+
+    default:
+        printf("Opcao Invalida, digite novamente\n");
+
+
+    }
+
+
+    }
 
 
     if(argc==1)
@@ -198,10 +218,14 @@ int main(int argc, char** argv)
     init(argc,argv);
 
 
-
     exposure = 1.0f; // exposição inicial
 
-    leitura();
+
+    strcpy(urls,url); //passa o valor do ponteiro para urls
+
+
+    leitura(); //chama o arquivo de elitura
+
 
     // Aplica processamento inicial
     process();
