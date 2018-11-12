@@ -58,8 +58,6 @@ void process()
 {
     printf("Exposure: %.3f\n", exposure);
 
-    printf("modo: %d\n", modo);
-
 
     for(int i=0; i<width*height; i++)
     {
@@ -68,7 +66,7 @@ void process()
 
         if(modo == 0)
         {
-                    //Tone mapping por escala
+            //Tone mapping por escala
             r = ((image[i].r / (image[i].r + 0.5))* exposure);
             g = ((image[i].g / (image[i].g + 0.5))* exposure);
             b = ((image[i].b / (image[i].b + 0.5))*exposure);
@@ -77,15 +75,12 @@ void process()
         else if (modo == 1)
         {
 
-              //Tone mapping por correção gama
+            //Tone mapping por correção gama
             r = ((fastpow(image[i].r,(1.0/1.8)))* exposure);
             g = ((fastpow(image[i].g,(1.0/1.8)))* exposure);
             b = ((fastpow(image[i].b,(1.0/1.8)))* exposure);
 
         }
-
-
-
 
 
         //2.4: Conversão para 24 bits
