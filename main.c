@@ -64,27 +64,28 @@ void process()
     for(int i=0; i<width*height; i++)
     {
 
+
+
         if(modo == 0)
         {
-            //Tone mapping por escala
-            r = (image[i].r / (image[i].r + 0.5));
-            g = (image[i].g / (image[i].g + 0.5));
-            b = (image[i].b / (image[i].b + 0.5));
+                    //Tone mapping por escala
+            r = ((image[i].r / (image[i].r + 0.5))* exposure);
+            g = ((image[i].g / (image[i].g + 0.5))* exposure);
+            b = ((image[i].b / (image[i].b + 0.5))*exposure);
 
         }
         else if (modo == 1)
         {
-            //Tone mapping por correção gama
-            r = (fastpow(image[i].r,(1.0/1.8)));
-            g = (fastpow(image[i].g,(1.0/1.8)));
-            b = (fastpow(image[i].b,(1.0/1.8)));
+
+              //Tone mapping por correção gama
+            r = ((fastpow(image[i].r,(1.0/1.8)))* exposure);
+            g = ((fastpow(image[i].g,(1.0/1.8)))* exposure);
+            b = ((fastpow(image[i].b,(1.0/1.8)))* exposure);
 
         }
 
-        //Fator de exposição
-        r = (image[i].r * exposure);
-        g = (image[i].g * exposure);
-        b = (image[i].b * exposure);
+
+
 
 
         //2.4: Conversão para 24 bits
